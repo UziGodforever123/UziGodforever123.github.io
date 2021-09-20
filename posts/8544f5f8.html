@@ -130,31 +130,6 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="" class="waves-effect waves-light">
-
-      
-      <i class="fas fa-heartbeat" style="zoom: 0.6;"></i>
-      
-      <span>清单</span>
-      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
-    </a>
-    <ul class="sub-nav menus_item_child ">
-      
-      <li>
-        <a href="/List/galleries">
-          
-          <i class="fas fa-image" style="margin-top: -20px; zoom: 0.6;"></i>
-          
-          <span>相册</span>
-        </a>
-      </li>
-      
-    </ul>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
     <a href="/contact" class="waves-effect waves-light">
       
       <i class="fas fa-envelope" style="zoom: 0.6;"></i>
@@ -282,31 +257,6 @@
 				   <i class="fa fas fa-tag" style="position: absolute;left:50px" ></i>
 			      
 		          <span>标签</span>
-                  </a>
-                </li>
-              
-            </ul>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="javascript:;">
-			
-				<i class="fa-fw fas fa-heartbeat"></i>
-			
-			清单
-			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
-		</a>
-            <ul  style="background:  ;" >
-              
-                <li>
-
-                  <a href="/List/galleries " style="margin-left:75px">
-				  
-				   <i class="fa fas fa-image" style="position: absolute;left:50px" ></i>
-			      
-		          <span>相册</span>
                   </a>
                 </li>
               
@@ -640,7 +590,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="解析vector在msvc中的增长方式"><a href="#解析vector在msvc中的增长方式" class="headerlink" title="解析vector在msvc中的增长方式"></a>解析vector在msvc中的增长方式</h1><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>首先，我们在vs2019中对于vector的增长方式进行测试。</p>
+                <h1 id="解析vector在msvc中的增长方式"><a href="#解析vector在msvc中的增长方式" class="headerlink" title="解析vector在msvc中的增长方式"></a>解析vector在msvc中的增长方式</h1><p><img src="https://raw.githubusercontent.com/UziGodforever123/image/master/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210311203002.jpg?token=AQ2NFAQVS32NCKZWI3IXJW3BJBBJK"></p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>首先，我们在vs2019中对于vector的增长方式进行测试。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         a<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
         cout <span class="token operator">&lt;&lt;</span> a<span class="token punctuation">.</span><span class="token function">capacity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">"    "</span><span class="token punctuation">;</span>
