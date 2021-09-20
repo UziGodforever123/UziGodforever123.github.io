@@ -675,9 +675,10 @@
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">pragma</span> <span class="token expression"><span class="token function">pack</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>来设置字节对齐值，上面就将字节对齐值设为1。<br><strong>字节对齐的原因</strong>：</p>
 <ul>
-<li><p>可以提升CPU访问数据的效率：如果字节不对齐的话，可能要通过两次读取操作才能完成对于数据的读取，但是如果内存对齐的话，只要一次就可以了。</p>
+<li>可以提升CPU访问数据的效率：如果字节不对齐的话，可能要通过两次读取操作才能完成对于数据的读取，但是如果内存对齐的话，只要一次就可以了。</li>
+</ul>
 <h5 id="拷贝构造函数、拷贝赋值函数、析构函数"><a href="#拷贝构造函数、拷贝赋值函数、析构函数" class="headerlink" title="拷贝构造函数、拷贝赋值函数、析构函数"></a>拷贝构造函数、拷贝赋值函数、析构函数</h5><p>在拷贝赋值函数（即operator=）中，注意对于<strong>自我赋值</strong>的处理。</p>
-</li>
+<ul>
 <li><p><strong>析构函数为什么要采用虚函数？</strong><br>因为如果通过父类指针调用析构函数，并且该指针指向的是子类对象，并且析构函数不是虚函数的话，就只会析构该子类对象的父类部分，这就会导致错误。</p>
 </li>
 <li><p><strong>为什么构造函数不能是虚函数？</strong><br>（1）<strong>将构造函数定义为虚函数是无意义的</strong>。<br>所谓利用<strong>虚机制</strong>实现运行时多态，<strong>实际上是通过指针实际所指对象的不同调用不同的函数。</strong><br>但是如果对象尚未被创建出来，我们就无法获取实际对象的类型信息，也就无法实现动态绑定。<br>（2）如果我们希望通过动态绑定的方式调用构造函数，那么就必须要通过<strong>虚指针</strong>来实现，但是由于此时对象并为被创建，也就没有虚指针，这样也就无法通过动态绑定来实现对于虚构造函数的调用。因此构造函数无法是虚函数。<br>（3）构造函数是在创建对象时被自动调用的，因此即便我们将构造函数是虚函数，我们也无法通过动态绑定的方式来调用。</p>
