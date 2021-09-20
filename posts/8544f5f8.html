@@ -565,7 +565,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    476
+                    464
                 </div>
                 
 
@@ -599,7 +599,7 @@
 
 <p><strong>结果</strong><br><a target="_blank" rel="noopener" href="https://imgtu.com/i/4GoZjI"><img src="https://z3.ax1x.com/2021/09/20/4GoZjI.png"></a></p>
 <p>由图中结果可以看出，每次重新分配空间，<strong>vector的容量增长了原容量的一半。</strong></p>
-<h3 id="分析源码"><a href="#分析源码" class="headerlink" title="分析源码"></a>分析源码</h3><p>首先，调用push_back函数。<br>@import “push_back.png”<br>在<strong>push_back</strong>函数内部调用<strong>emplace_back</strong>。<br>@import “emplace_back.png”<br>而在emplace_back内部，当容量不足时，会调用 <strong>_Emplace_reallocate</strong>函数，来重新分配内存空间。<br>@import “realloc.png”<br>在该函数内部，会更新size与capacity的值。通过函数 <strong>_Calculate_growth</strong>来计算vector新的容量值。<br>@import “calculate_growth.png”</p>
+<h3 id="分析源码"><a href="#分析源码" class="headerlink" title="分析源码"></a>分析源码</h3><p>首先，调用push_back函数。<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/4Go83j"><img src="https://z3.ax1x.com/2021/09/20/4Go83j.png"></a><br>在<strong>push_back</strong>函数内部调用<strong>emplace_back</strong>。<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/4GogDx"><img src="https://z3.ax1x.com/2021/09/20/4GogDx.png"></a><br>而在emplace_back内部，当容量不足时，会调用 <strong>_Emplace_reallocate</strong>函数，来重新分配内存空间。<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/4GoND0"><img src="https://z3.ax1x.com/2021/09/20/4GoND0.png"></a><br>在该函数内部，会更新size与capacity的值。通过函数 <strong>_Calculate_growth</strong>来计算vector新的容量值。<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/4Goh5D"><img src="https://z3.ax1x.com/2021/09/20/4Goh5D.png"></a></p>
 <ul>
 <li>如果旧容量与旧容量的1/2的和超过了所能分配的最大内存，则返回该最大内存的值。</li>
 <li>否则，将新内存更新为旧容量与旧容量的1/2的和。即<strong>容量增长了原容量的一半。</strong></li>
