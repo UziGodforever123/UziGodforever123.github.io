@@ -523,7 +523,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-09-20
+                    2021-09-21
                 </div>
                 
 
@@ -560,7 +560,7 @@
 <pre class="line-numbers language-none"><code class="language-none">class A {
 public:
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>@import “test1.png”<br>如果一个类是空类，那么编译器会为它分配一个字符量，这样空类的大小就为1。</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/4JsO2T"><img src="https://z3.ax1x.com/2021/09/21/4JsO2T.png"></a><br>如果一个类是空类，那么编译器会为它分配一个字符量，这样空类的大小就为1。</p>
 <p><strong>test2</strong>  不含虚函数的类</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
     <span class="token keyword">char</span> a<span class="token punctuation">;</span>
@@ -572,7 +572,7 @@ public:
 <li><strong>数据成员的字节对齐</strong>：每个非静态数据成员的偏移量应该是其本身类型大小的整数倍。</li>
 <li><strong>整体对象的字节对齐</strong>：最终该类对象的大小应该是其非静态数据成员的最大类型大小的整数倍。</li>
 </ul>
-<p>因此，在考虑字节对齐的情况下，本例中，类A的大小即为（1(char成员1字节)+7(字节对齐)+8(double成员 8字节)=16字节）。<br>@import “test2.png”<br>对象内存分布如下：</p>
+<p>因此，在考虑字节对齐的情况下，本例中，类A的大小即为（1(char成员1字节)+7(字节对齐)+8(double成员 8字节)=16字节）。<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/4JyQit"><img src="https://z3.ax1x.com/2021/09/21/4JyQit.png"></a><br>对象内存分布如下：</p>
 <pre class="line-numbers language-none"><code class="language-none">class A	size(16):
 1&gt;	+---
 1&gt; 0	| a
@@ -608,7 +608,7 @@ public:
 <span class="token keyword">public</span><span class="token operator">:</span>
    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>当对象内存在double类型，或者更大类型的数据成员时，虚表指针的大小就会变为8字节，<strong>可能是字节对齐的原因</strong>，目前没有找到合理的解释。<br>在本例中，该类对象A的大小是 8(虚表指针)+1(char1字节)+7(字节对齐)+8(double8字节)=24字节<br>@import “test4.png”</p>
+<p>当对象内存在double类型，或者更大类型的数据成员时，虚表指针的大小就会变为8字节，<strong>可能是字节对齐的原因</strong>，目前没有找到合理的解释。<br>在本例中，该类对象A的大小是 8(虚表指针)+1(char1字节)+7(字节对齐)+8(double8字节)=24字节<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/4JyGQS"><img src="https://z3.ax1x.com/2021/09/21/4JyGQS.png"></a></p>
 <pre class="line-numbers language-none"><code class="language-none">class A	size(24):
 1&gt;	+---
 1&gt; 0	| {vfptr}
@@ -640,7 +640,7 @@ public:
     <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>当某个类对象同时继承多个类时(即多重继承)，则<strong>父类中有虚函数的类对象位于前面，没有虚函数的类对象位于后面</strong>。<br>在本例中，如果类A中没有虚函数，那么类C应该位于类B的前部，但是由于A中包含虚函数，因此类A在前，类C在后。<br>类B大小： 24(类A大小24字节)+16(类C大小16字节)+4(int成员变量4字节)+4(字节对齐4字节)=48字节<br>@import “test5.png”</p>
+<p>当某个类对象同时继承多个类时(即多重继承)，则<strong>父类中有虚函数的类对象位于前面，没有虚函数的类对象位于后面</strong>。<br>在本例中，如果类A中没有虚函数，那么类C应该位于类B的前部，但是由于A中包含虚函数，因此类A在前，类C在后。<br>类B大小： 24(类A大小24字节)+16(类C大小16字节)+4(int成员变量4字节)+4(字节对齐4字节)=48字节<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/4JyUds"><img src="https://z3.ax1x.com/2021/09/21/4JyUds.png"></a></p>
 <pre class="line-numbers language-none"><code class="language-none">1&gt;class B	size(48):
 1&gt;	+---
 1&gt; 0	| +--- (base class A)
@@ -731,7 +731,7 @@ public:
 
 <p>在本例中，类B和类C都虚继承类A，而类E有继承类B和类C。</p>
 <p>类E的大小为 24(类C不包含虚基类的部分的大小)+24(类B不包含虚基类的部分的大小)+4(int4字节)+4(字节对齐4字节)+1(虚基类A1字节)=57字节</p>
-<p>@import “test7.png”</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/4JyDzT"><img src="https://z3.ax1x.com/2021/09/21/4JyDzT.png"></a></p>
 <pre class="line-numbers language-none"><code class="language-none">1&gt;class E	size(57):
 1&gt;	+---
 1&gt; 0	| +--- (base class C)
