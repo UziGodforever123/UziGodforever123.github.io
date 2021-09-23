@@ -523,14 +523,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-09-21
+                    2021-09-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.8k
+                    1.9k
                 </div>
                 
 
@@ -556,13 +556,11 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="msvc中类对象的大小"><a href="#msvc中类对象的大小" class="headerlink" title="msvc中类对象的大小"></a>msvc中类对象的大小</h1><p>本文主要来介绍一下在msvc编译器中，类对象的内存分配问题。</p>
-<p><strong>test1</strong> 空类</p>
-<pre class="line-numbers language-none"><code class="language-none">class A {
+<h3 id="test1-空类"><a href="#test1-空类" class="headerlink" title="test1 空类"></a><strong>test1</strong> 空类</h3><pre class="line-numbers language-none"><code class="language-none">class A {
 public:
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p><a target="_blank" rel="noopener" href="https://imgtu.com/i/4JsO2T"><img src="https://z3.ax1x.com/2021/09/21/4JsO2T.png"></a><br>如果一个类是空类，那么编译器会为它分配一个字符量，这样空类的大小就为1。</p>
-<p><strong>test2</strong>  不含虚函数的类</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
+<h3 id="test2-不含虚函数的类"><a href="#test2-不含虚函数的类" class="headerlink" title="test2  不含虚函数的类"></a><strong>test2</strong>  不含虚函数的类</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
     <span class="token keyword">char</span> a<span class="token punctuation">;</span>
     <span class="token keyword">double</span> x<span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>   
@@ -580,8 +578,7 @@ public:
 1&gt; 8	| x
 1&gt;	+---<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <hr>
-<p><strong>test3</strong> 含有虚函数的类</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
+<h3 id="test3-含有虚函数的类"><a href="#test3-含有虚函数的类" class="headerlink" title="test3 含有虚函数的类"></a><strong>test3</strong> 含有虚函数的类</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">char</span> a<span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -600,15 +597,14 @@ public:
 1&gt; 0	| &amp;A::print
 1&gt;A::print this adjustor: 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>test4</strong></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
+<h3 id="test4"><a href="#test4" class="headerlink" title="test4"></a><strong>test4</strong></h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">char</span> a<span class="token punctuation">;</span>
     <span class="token keyword">double</span> x<span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>当对象内存在double类型，或者更大类型的数据成员时，虚表指针的大小就会变为8字节，<strong>可能是字节对齐的原因</strong>，目前没有找到合理的解释。<br>在本例中，该类对象A的大小是 8(虚表指针)+1(char1字节)+7(字节对齐)+8(double8字节)=24字节<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/4JyGQS"><img src="https://z3.ax1x.com/2021/09/21/4JyGQS.png"></a></p>
+<p>在本例中，虚表指针占了8个字节，其中字节对齐占了4个字节。在这里需要字节对齐的原因是，<strong>为了让虚函数指针的存在不影响该对象原本的结构</strong>。<br>如果这里不存在虚函数指针，那么就需要在 <strong>变量a</strong>与 <strong>变量x</strong>之间填充7个字节。而如果虚函数指针只占用4个字节，那么就只需要在<strong>变量a</strong>与 <strong>变量x</strong>之间填充3个字节。这样就影响了该对象原本的对齐方式。因此需要在虚函数指针后，填充四个字节。<br>在本例中，该类对象A的大小是 8(虚表指针)+1(char1字节)+7(字节对齐)+8(double8字节)=24字节<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/4JyGQS"><img src="https://z3.ax1x.com/2021/09/21/4JyGQS.png"></a></p>
 <pre class="line-numbers language-none"><code class="language-none">class A	size(24):
 1&gt;	+---
 1&gt; 0	| {vfptr}
@@ -621,8 +617,7 @@ public:
 1&gt;	|  0
 1&gt; 0	| &amp;A::print
 1&gt;A::print this adjustor: 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>test5</strong>  多重继承</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">C</span> <span class="token punctuation">{</span>
+<h3 id="test5-多重继承"><a href="#test5-多重继承" class="headerlink" title="test5  多重继承"></a><strong>test5</strong>  多重继承</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">C</span> <span class="token punctuation">{</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">double</span> z<span class="token punctuation">;</span>
     <span class="token keyword">double</span> zz<span class="token punctuation">;</span>
@@ -661,7 +656,7 @@ public:
 1&gt;	|  0
 1&gt; 0	| &amp;B::print
 1&gt;B::print this adjustor: 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>test6</strong> 单一虚继承<br>对于虚继承，虚基类位于子类的末尾位置，不考虑字节对齐。在子类部分的首部(不包括继承其他类的部分)有一个指向该虚基类的虚指针。该虚指针的对齐方式与前面的虚表指针一样。</p>
+<h3 id="test6-单一虚继承"><a href="#test6-单一虚继承" class="headerlink" title="test6 单一虚继承"></a><strong>test6</strong> 单一虚继承</h3><p>对于虚继承，虚基类位于子类的末尾位置，不考虑字节对齐。在子类部分的首部(不包括继承其他类的部分)有一个指向该虚基类的虚指针。该虚指针的对齐方式与前面的虚表指针一样。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">C</span> <span class="token punctuation">{</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">char</span> s<span class="token punctuation">;</span>
@@ -703,8 +698,7 @@ public:
 1&gt;               A      24       4       4 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>对于此对象模型的解释，可以从以下这篇文章得到一个大概的解释。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/chengonghao/article/details/51679743">https://blog.csdn.net/chengonghao/article/details/51679743</a></p>
 <p>首先，类C在首部，大小为1个字节，而后就是虚指针，由于虚指针需要保证字节对齐，因此首先要在虚指针前面添加三个字节，保证指针字节对齐，又由于类B需要虚指针整体字节对齐，因此需要在虚指针后面添加一个字节，保证虚指针整体大小为8个字节。<br>因此，类B的大小为(1(类C 1字节)+3(字节对齐3字节)+4(虚指针4字节)+1(字节对齐)+1(char1字节)+2(字节对齐)+4(int4字节)+8(double 4字节))=25字节。</p>
-<p><strong>test7</strong> 菱形继承（含有虚继承）</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
+<h3 id="test7-菱形继承（含有虚继承）"><a href="#test7-菱形继承（含有虚继承）" class="headerlink" title="test7 菱形继承（含有虚继承）"></a><strong>test7</strong> 菱形继承（含有虚继承）</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
    <span class="token keyword">char</span> az<span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -763,8 +757,7 @@ public:
 1&gt;vbi:	   class  offset o.vbptr  o.vbte fVtorDisp
 1&gt;               A      56       0       4 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>test8</strong> 虚继承+虚函数</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
+<h3 id="test8-虚继承-虚函数"><a href="#test8-虚继承-虚函数" class="headerlink" title="test8 虚继承+虚函数"></a><strong>test8</strong> 虚继承+虚函数</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
     <span class="token keyword">int</span> t<span class="token punctuation">;</span>
     <span class="token keyword">const</span> <span class="token keyword">double</span> i <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -1169,7 +1162,7 @@ public:
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">10.5k</span>&nbsp;字
+                class="white-color">10.6k</span>&nbsp;字
             
             
             
