@@ -669,7 +669,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><p>将当前数组根据一个基准划分为两部分，一部分比该基准小，另一部分大于该基准。之后，在分别对两个子数组执行快速排序。</p>
-<p><strong>时间复杂度</strong>：O((nlogn))<br><strong>空间复杂度</strong>：O((logn))   //由于要进行(logn)轮递归所消耗的额外空间 递归的深度为(logn),因此需要消耗的栈空间为O(logn)<br><strong>稳定性</strong>：快速排序是<strong>不稳定的</strong>。</p>
+<p><strong>时间复杂度</strong>：O((nlogn))<br><strong>空间复杂度</strong>：O((logn))   //由于要进行(logn)轮递归所消耗的额外空间 递归的深度为(logn),因此需要消耗的栈空间为O((logn))<br><strong>稳定性</strong>：快速排序是<strong>不稳定的</strong>。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">_quicksort</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span><span class="token operator">&amp;</span> data<span class="token punctuation">,</span><span class="token keyword">int</span> begin<span class="token punctuation">,</span><span class="token keyword">int</span> end<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>begin <span class="token operator">&gt;=</span> end<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
     <span class="token keyword">int</span> s <span class="token operator">=</span> begin<span class="token punctuation">;</span>
@@ -689,7 +689,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>算法优化</strong>：<br>对于一个有序的序列，快速排序的排序时间复杂度会退化到O((n^2))。<br>快速排序对于有序度高的序列，排序速度很慢。<br>可以随机选择基准元素，而不是总是选择当前序列的第一个元素作为基准元素。</p>
 <h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><p><strong>原地堆排序</strong>：将一个数组直接堆化，然后将最大值与末尾元素交换，再执行shiftdown操作，将前(n-1)个元素重新变为一个最大堆。这样不断重复执行，最终便可以得到一个有序的数组。</p>
-<p><strong>时间复杂度</strong> O(nlogn)<br><strong>空间复杂度</strong> O(1)</p>
+<p><strong>时间复杂度</strong> O((nlogn))<br><strong>空间复杂度</strong> O(1)</p>
 <h3 id="拓展算法"><a href="#拓展算法" class="headerlink" title="拓展算法"></a>拓展算法</h3><h4 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h4>
                 
             </div>
