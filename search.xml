@@ -84,8 +84,8 @@
     
     <entry>
       <title>图形学 面经</title>
-      <link href="posts/d426d8b5.html"/>
-      <url>posts/d426d8b5.html</url>
+      <link href="posts/7a0cf5ae.html"/>
+      <url>posts/7a0cf5ae.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="图形学面经"><a href="#图形学面经" class="headerlink" title="图形学面经"></a>图形学面经</h1><h3 id="3D数学"><a href="#3D数学" class="headerlink" title="3D数学"></a>3D数学</h3><p><strong>1.判断点是否在三角形内部</strong></p><ul><li>重心坐标：如果该点在三角形内部，那么重心坐标应该都为非负值。</li><li>面积法：三个部分之和与原三角形面积相等。</li><li>求该点与顶点所连向量的叉乘结果。如果三个都同号，则说明该点在三角形内部。</li></ul><h3 id="图形学"><a href="#图形学" class="headerlink" title="图形学"></a>图形学</h3><p><strong>1.渲染管线</strong><br>渲染管线指的是将一堆具有几何信息的数据点最终转换到二维屏幕空间的像素。</p><ul><li>顶点处理：对顶点数据进行 MVP变换。（模型变换、视角变换、投影变换）</li><li>三角形处理：将顶点按照原本的几何信息组合成三角形面。</li><li>光栅化：确认三角形中的每个像素点。</li><li>片元处理：对像素点进行着色。</li><li>将像素点信息转换为图像</li></ul>]]></content>
       
