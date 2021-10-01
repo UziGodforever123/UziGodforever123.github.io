@@ -534,14 +534,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    314
+                    656
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -611,8 +611,74 @@ ListNode<span class="token operator">*</span> <span class="token function">merge
     <span class="token keyword">return</span> result<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>时间复杂度 ：O((k^2*N))<br>空间复杂度 ：O((1));</p>
-<h4 id="顺序合并-1"><a href="#顺序合并-1" class="headerlink" title="顺序合并"></a>顺序合并</h4>
+<p>时间复杂度 ：O((k^2*n))<br>空间复杂度 ：O((1));</p>
+<h4 id="分治合并"><a href="#分治合并" class="headerlink" title="分治合并"></a>分治合并</h4><p>将链表两两配对，即采取归并的思想，需要经历(logk)轮合并。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">merge</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> l1<span class="token punctuation">,</span> ListNode<span class="token operator">*</span> l2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ListNode<span class="token operator">*</span> p <span class="token operator">=</span> l1<span class="token punctuation">,</span> <span class="token operator">*</span> q <span class="token operator">=</span> l2<span class="token punctuation">;</span>
+    ListNode<span class="token operator">*</span> t <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ListNode<span class="token operator">*</span> temp <span class="token operator">=</span> t<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>p <span class="token operator">!=</span> <span class="token keyword">nullptr</span> <span class="token operator">&amp;&amp;</span> q <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         <span class="token keyword">if</span> <span class="token punctuation">(</span>p<span class="token operator">-&gt;</span>val <span class="token operator">&lt;</span> q<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            temp<span class="token operator">-&gt;</span>next <span class="token operator">=</span> p<span class="token punctuation">;</span>
+            p <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+            temp <span class="token operator">=</span> temp<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+            temp<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            temp<span class="token operator">-&gt;</span>next <span class="token operator">=</span> q<span class="token punctuation">;</span>
+            q <span class="token operator">=</span> q<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+            temp <span class="token operator">=</span> temp<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+            temp<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    temp<span class="token operator">-&gt;</span>next<span class="token operator">=</span>p<span class="token operator">==</span><span class="token keyword">nullptr</span><span class="token operator">?</span>q<span class="token operator">:</span>p<span class="token punctuation">;</span>
+    ListNode<span class="token operator">*</span> result <span class="token operator">=</span> t<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+    <span class="token keyword">delete</span> t<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ListNode<span class="token operator">*</span> <span class="token function">mergeKLists</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>ListNode<span class="token operator">*</span><span class="token operator">&gt;</span><span class="token operator">&amp;</span> lists<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>lists<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>lists<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> lists<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    vector<span class="token operator">&lt;</span>ListNode<span class="token operator">*</span> <span class="token operator">&gt;</span>next<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>lists<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ListNode<span class="token operator">*</span> temp<span class="token operator">=</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token operator">==</span>lists<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">?</span>lists<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">:</span><span class="token function">merge</span><span class="token punctuation">(</span>lists<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>lists<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        next<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token function">mergeKLists</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>时间复杂度 ：O((kn* logk))<br>空间复杂度： O((k))</p>
+<h4 id="使用优先队列合并"><a href="#使用优先队列合并" class="headerlink" title="使用优先队列合并"></a>使用优先队列合并</h4><p>同时处理所有链表的合并，需要我们选出当前链表中剩余待合并元素的最小值，这需要我们利用优先队列来实现。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">s</span> <span class="token punctuation">{</span>
+    ListNode<span class="token operator">*</span> p<span class="token punctuation">;</span>
+    <span class="token function">s</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> x<span class="token punctuation">)</span> <span class="token operator">:</span><span class="token function">p</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token keyword">bool</span> <span class="token keyword">operator</span><span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token keyword">const</span> s<span class="token operator">&amp;</span> s2<span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> p<span class="token operator">-&gt;</span>val <span class="token operator">&gt;</span> s2<span class="token punctuation">.</span>p<span class="token operator">-&gt;</span>val<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+ListNode<span class="token operator">*</span> <span class="token function">mergeKLists</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>ListNode<span class="token operator">*</span><span class="token operator">&gt;</span><span class="token operator">&amp;</span> lists<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>lists<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+    ListNode<span class="token operator">*</span> result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ListNode<span class="token operator">*</span> p <span class="token operator">=</span> result<span class="token punctuation">;</span>
+    priority_queue<span class="token operator">&lt;</span>s<span class="token operator">&gt;</span> rank<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> lists<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>lists<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">!=</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        s <span class="token function">temp</span><span class="token punctuation">(</span>lists<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rank<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>rank<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        ListNode<span class="token operator">*</span> temp <span class="token operator">=</span> rank<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>p<span class="token punctuation">;</span>
+        rank<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>temp<span class="token operator">-&gt;</span>next <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> rank<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">s</span><span class="token punctuation">(</span>temp<span class="token operator">-&gt;</span>next<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        p<span class="token operator">-&gt;</span>next <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+        p <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+        p<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    ListNode<span class="token operator">*</span> r <span class="token operator">=</span> result<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+    <span class="token keyword">delete</span> result<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> r<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -981,7 +1047,7 @@ ListNode<span class="token operator">*</span> <span class="token function">merge
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">14.8k</span>&nbsp;字
+                class="white-color">15.1k</span>&nbsp;字
             
             
             
