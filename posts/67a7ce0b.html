@@ -527,21 +527,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-01
+                    2021-10-03
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    54
+                    662
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -560,7 +560,59 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="leetcode题解：-32-最长有效括号"><a href="#leetcode题解：-32-最长有效括号" class="headerlink" title="leetcode题解： 32.最长有效括号"></a>leetcode题解： 32.最长有效括号</h1><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给你一个只包含 ‘(‘ 和 ‘)’ 的字符串，找出最长有效（格式正确且连续）括号子串的长度。</p>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><h4 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h4>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><h4 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h4><p>我们定义dp[i]为以下标i为结尾的字符串的最长有效括号的长度。<br>则只有以’)’为结尾的子串才有可能是有效的。</p>
+<ul>
+<li>如果s[i]==’)’&amp;&amp;s[i-1]==’(‘，那么dp[i]=dp[i-2]+2</li>
+<li>如果s[i]==’)’&amp;&amp;s[i-1]==’)’，那么此时在i之前已经有一个有效的子串，我们就需要判断该有效子串之前的字符是不是’(‘。<br>如果s[i-dp[i-1]-1]==’(‘,那么dp[i]=dp[i-1]+dp[i-dp[i-1]-2]+2。</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">longestValidParentheses</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+       <span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> <span class="token function">dp</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> m<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">')'</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'('</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token operator">==</span><span class="token number">1</span><span class="token operator">?</span><span class="token number">2</span><span class="token operator">:</span>dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">')'</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">')'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>i<span class="token operator">-</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">&gt;=</span><span class="token number">0</span><span class="token operator">&amp;&amp;</span>s<span class="token punctuation">[</span>i <span class="token operator">-</span> dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'('</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">-</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">2</span><span class="token operator">&gt;=</span><span class="token number">0</span><span class="token punctuation">)</span>
+                 dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">2</span><span class="token operator">+</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token keyword">else</span>
+                dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        m<span class="token operator">=</span><span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> m<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h4><p>通过栈来处理括号匹配问题是一种非常常见的思路。但是本题并不是判断一个字符串是不是有效的，而是判断字符串中最长有效括号的长度。<br>如果遍历每个子串进行判断的话，时间复杂度过高。<br>因此，我们需要一种新的思路。<br>我们假设这样一种情况，对于一个长度为n的字符串，它的[0,k)以及[k+1,n)是有效的。<br>那么，我们就需要能够在k之后，重新开始计算当前有效子串的长度。</p>
+<p>对于一个有效的字符串，在遍历过后栈应该为空。我们可以利用这一点来设计算法。<br>先向栈中存储一个 -1，作为起始下标。<br>对于’(‘，我们将其下标推入栈中。<br>对于’)’，</p>
+<ul>
+<li>取出栈顶元素。</li>
+<li>如果此时栈不为空，说明此时以下标i为结尾的字符串是有效的，那么计算此时有效子串的长度(i-s.top())。</li>
+<li>如果此时栈为空，那么说明此时以该字符为结尾的子串是无效的，那么我们就需要更新计数的起始位置，将下标i推入栈中。</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">  <span class="token keyword">int</span> <span class="token function">longestValidParentheses</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+       stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> d<span class="token punctuation">;</span>
+       <span class="token keyword">int</span> m<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+       d<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+          <span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">'('</span><span class="token punctuation">)</span> d<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token keyword">else</span> <span class="token punctuation">{</span>
+              d<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+              <span class="token keyword">if</span><span class="token punctuation">(</span>d<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>d<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+              <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                   <span class="token keyword">int</span> temp<span class="token operator">=</span>i<span class="token operator">-</span>d<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                   m<span class="token operator">=</span><span class="token function">max</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+              <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+       <span class="token punctuation">}</span>
+       <span class="token keyword">return</span> m<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
                 
             </div>
             <hr/>
@@ -922,7 +974,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">15.2k</span>&nbsp;字
+                class="white-color">16.1k</span>&nbsp;字
             
             
             
