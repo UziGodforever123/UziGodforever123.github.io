@@ -523,21 +523,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-03
+                    2021-10-06
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    6 分
                 </div>
                 
 
@@ -555,7 +555,238 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h1>
+                <h1 id="二叉搜索树及其变种"><a href="#二叉搜索树及其变种" class="headerlink" title="二叉搜索树及其变种"></a>二叉搜索树及其变种</h1><h3 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h3><p><strong>定义</strong><br>二叉搜索树以二叉树为基础，对于它的每个节点其左子树中的所有节点的值都要小于该节点，其右子树中所有节点的值都要大于该节点。</p>
+<p><strong>复杂度</strong><br>当我们需要查找一个指定值的节点时，时间复杂度为 O((logn))，最坏的时间复杂度为O((n))。<br>当我们需要向树中插入一个节点时，时间复杂度为O((logn))，最坏时间复杂度为O((n))。<br>当我们需要删除树中的一个元素时，时间复杂度为O((logn))，最坏时间复杂度为O((n))。</p>
+<p><strong>代码实现</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">TreeNode</span> <span class="token punctuation">{</span>
+	<span class="token keyword">int</span> val<span class="token punctuation">;</span>
+	TreeNode<span class="token operator">*</span> left<span class="token punctuation">;</span>
+	TreeNode<span class="token operator">*</span> right<span class="token punctuation">;</span>
+	<span class="token function">TreeNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span> <span class="token operator">:</span><span class="token function">val</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">left</span><span class="token punctuation">(</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">right</span><span class="token punctuation">(</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+	<span class="token function">TreeNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">,</span> TreeNode<span class="token operator">*</span> l<span class="token punctuation">,</span> TreeNode<span class="token operator">*</span> r<span class="token punctuation">)</span> <span class="token operator">:</span><span class="token function">val</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">left</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">right</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token comment">//在BST中查找指定元素</span>
+TreeNode<span class="token operator">*</span> <span class="token function">BST_find</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>val <span class="token operator">==</span> root<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> root<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>val <span class="token operator">&gt;</span> root<span class="token operator">-&gt;</span>val <span class="token operator">&amp;&amp;</span> root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">BST_find</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>val <span class="token operator">&lt;</span> root<span class="token operator">-&gt;</span>val <span class="token operator">&amp;&amp;</span> root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">BST_find</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//向BST中插入指定元素</span>
+<span class="token keyword">void</span> <span class="token function">BST_insert</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span>root<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>val <span class="token operator">&gt;</span> root<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			TreeNode<span class="token operator">*</span> temp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">TreeNode</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			root<span class="token operator">-&gt;</span>right <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token function">BST_insert</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">else</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			TreeNode<span class="token operator">*</span> temp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">TreeNode</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			root<span class="token operator">-&gt;</span>left <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token function">BST_insert</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+TreeNode<span class="token operator">*</span> <span class="token function">findmax</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">findmax</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">return</span> root<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//删除BST中的指定元素</span>
+TreeNode<span class="token operator">*</span> <span class="token function">BST_delete</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> root<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>val <span class="token operator">==</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-&gt;</span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">delete</span> root<span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			TreeNode<span class="token operator">*</span> result <span class="token operator">=</span> root<span class="token operator">-&gt;</span>right<span class="token punctuation">;</span>
+			<span class="token keyword">delete</span> root<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			TreeNode<span class="token operator">*</span> result <span class="token operator">=</span> root<span class="token operator">-&gt;</span>left<span class="token punctuation">;</span>
+			<span class="token keyword">delete</span> root<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            TreeNode<span class="token operator">*</span> m <span class="token operator">=</span> <span class="token function">findmax</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            m<span class="token operator">-&gt;</span>left <span class="token operator">=</span> <span class="token function">BST_delete</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">,</span> m<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            m<span class="token operator">-&gt;</span>right <span class="token operator">=</span> root<span class="token operator">-&gt;</span>right<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> m<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>val <span class="token operator">&gt;</span> key <span class="token operator">&amp;&amp;</span> root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        root<span class="token operator">-&gt;</span>left <span class="token operator">=</span> <span class="token function">BST_delete</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> root<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>val <span class="token operator">&lt;</span> key <span class="token operator">&amp;&amp;</span> root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        root<span class="token operator">-&gt;</span>right <span class="token operator">=</span> <span class="token function">BST_delete</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> root<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> root<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="平衡二叉搜索树-AVL"><a href="#平衡二叉搜索树-AVL" class="headerlink" title="平衡二叉搜索树 AVL"></a>平衡二叉搜索树 AVL</h3><p>由于二叉搜索树会出现左右子树分布不均匀的情况，导致查找的时间复杂度增大，因此我们需要平衡二叉搜索树，来解决这种问题。</p>
+<p>所谓平衡二叉搜索树，就是平衡的二叉搜索树。<br>而平衡二叉树需要满足的性质是树中任意节点的左右子树深度之差不大于1。</p>
+<p><strong>时间复杂度</strong></p>
+<p>由于AVL是平衡的，因此查找的时间复杂度为O((nlogn))。</p>
+<p><strong>代码实现</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">AVLNode</span> <span class="token punctuation">{</span>
+	<span class="token keyword">int</span> val<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> height<span class="token punctuation">;</span>
+	AVLNode<span class="token operator">*</span> left<span class="token punctuation">;</span>
+	AVLNode<span class="token operator">*</span> right<span class="token punctuation">;</span>
+
+	<span class="token function">AVLNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span> <span class="token operator">:</span><span class="token function">val</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">height</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">left</span><span class="token punctuation">(</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">right</span><span class="token punctuation">(</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token comment">//得到该节点的深度</span>
+<span class="token keyword">int</span> <span class="token function">get_height</span><span class="token punctuation">(</span>AVLNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> root<span class="token operator">-&gt;</span>height<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//得到该节点的平衡因子</span>
+<span class="token keyword">int</span> <span class="token function">get_bf</span><span class="token punctuation">(</span>AVLNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">get_height</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">get_height</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token comment">//LL型</span>
+AVLNode<span class="token operator">*</span> <span class="token function">LL_rotate</span><span class="token punctuation">(</span>AVLNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	AVLNode<span class="token operator">*</span> temp <span class="token operator">=</span> root<span class="token operator">-&gt;</span>left<span class="token punctuation">;</span>
+	root<span class="token operator">-&gt;</span>left <span class="token operator">=</span> temp<span class="token operator">-&gt;</span>right<span class="token punctuation">;</span>
+	temp<span class="token operator">-&gt;</span>right <span class="token operator">=</span> root<span class="token punctuation">;</span>
+	root<span class="token operator">-&gt;</span>height <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token function">get_height</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">get_height</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	temp<span class="token operator">-&gt;</span>height <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token function">get_height</span><span class="token punctuation">(</span>temp<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">get_height</span><span class="token punctuation">(</span>temp<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> temp<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//RR型</span>
+AVLNode<span class="token operator">*</span> <span class="token function">RR_rotate</span><span class="token punctuation">(</span>AVLNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	AVLNode<span class="token operator">*</span> temp <span class="token operator">=</span> root<span class="token operator">-&gt;</span>right<span class="token punctuation">;</span>
+	root<span class="token operator">-&gt;</span>right <span class="token operator">=</span> temp<span class="token operator">-&gt;</span>left<span class="token punctuation">;</span>
+	temp<span class="token operator">-&gt;</span>left <span class="token operator">=</span> root<span class="token punctuation">;</span>
+	root<span class="token operator">-&gt;</span>height <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token function">get_height</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">get_height</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	temp<span class="token operator">-&gt;</span>height <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token function">get_height</span><span class="token punctuation">(</span>temp<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">get_height</span><span class="token punctuation">(</span>temp<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> temp<span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//LR型</span>
+AVLNode<span class="token operator">*</span> <span class="token function">LR_rotate</span><span class="token punctuation">(</span>AVLNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	AVLNode<span class="token operator">*</span> temp <span class="token operator">=</span> root<span class="token operator">-&gt;</span>left<span class="token punctuation">;</span>
+	root<span class="token operator">-&gt;</span>left <span class="token operator">=</span> <span class="token function">RR_rotate</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token function">LL_rotate</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//RL型</span>
+AVLNode<span class="token operator">*</span> <span class="token function">RL_rotate</span><span class="token punctuation">(</span>AVLNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	AVLNode<span class="token operator">*</span> temp <span class="token operator">=</span> root<span class="token operator">-&gt;</span>right<span class="token punctuation">;</span>
+	root<span class="token operator">-&gt;</span>right <span class="token operator">=</span> <span class="token function">LL_rotate</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token function">RR_rotate</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//向AVL树中插入元素</span>
+AVLNode<span class="token operator">*</span> <span class="token function">AVL_insert</span><span class="token punctuation">(</span>AVLNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token function">AVLNode</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>val <span class="token operator">&gt;</span> root<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			root<span class="token operator">-&gt;</span>right <span class="token operator">=</span> <span class="token function">AVL_insert</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">else</span> <span class="token punctuation">{</span>
+			AVLNode<span class="token operator">*</span> temp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">AVLNode</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			root<span class="token operator">-&gt;</span>right <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>val <span class="token operator">&lt;</span> root<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			root<span class="token operator">-&gt;</span>left <span class="token operator">=</span> <span class="token function">AVL_insert</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">else</span> <span class="token punctuation">{</span>
+			AVLNode<span class="token operator">*</span> temp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">AVLNode</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			root<span class="token operator">-&gt;</span>left <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	root<span class="token operator">-&gt;</span>height <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token function">get_height</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">get_height</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> bf <span class="token operator">=</span> <span class="token function">get_bf</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>bf <span class="token operator">&gt;</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> val <span class="token operator">&lt;</span> root<span class="token operator">-&gt;</span>left<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token function">LL_rotate</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>bf <span class="token operator">&gt;</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> val <span class="token operator">&gt;</span> root<span class="token operator">-&gt;</span>left<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token function">LR_rotate</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>bf <span class="token operator">&lt;</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">&amp;&amp;</span> val <span class="token operator">&gt;</span> root<span class="token operator">-&gt;</span>right<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token function">RR_rotate</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>bf <span class="token operator">&lt;</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">&amp;&amp;</span> val <span class="token operator">&lt;</span> root<span class="token operator">-&gt;</span>right<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token function">RL_rotate</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> root<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+AVLNode<span class="token operator">*</span> <span class="token function">findmin</span><span class="token punctuation">(</span>AVLNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">findmin</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">else</span> <span class="token keyword">return</span> root<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//从AVL树中删除元素</span>
+AVLNode<span class="token operator">*</span> <span class="token function">AVL_delete</span><span class="token punctuation">(</span>AVLNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>val <span class="token operator">==</span> root<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-&gt;</span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">delete</span> root<span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			AVLNode<span class="token operator">*</span> temp <span class="token operator">=</span> root<span class="token operator">-&gt;</span>right<span class="token punctuation">;</span>
+			<span class="token keyword">delete</span> root<span class="token punctuation">;</span>
+			<span class="token keyword">return</span> temp<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			AVLNode<span class="token operator">*</span> temp<span class="token operator">=</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">;</span>
+			<span class="token keyword">delete</span> root<span class="token punctuation">;</span>
+			<span class="token keyword">return</span> root<span class="token operator">-&gt;</span>left<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">else</span> <span class="token punctuation">{</span>
+			AVLNode<span class="token operator">*</span> temp <span class="token operator">=</span> <span class="token function">findmin</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">int</span> m <span class="token operator">=</span> temp<span class="token operator">-&gt;</span>val<span class="token punctuation">;</span>
+			root<span class="token operator">-&gt;</span>right <span class="token operator">=</span> <span class="token function">AVL_delete</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">,</span> temp<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			root<span class="token operator">-&gt;</span>val <span class="token operator">=</span> m<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>val <span class="token operator">&gt;</span> root<span class="token operator">-&gt;</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		root<span class="token operator">-&gt;</span>right <span class="token operator">=</span> <span class="token function">AVL_delete</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">else</span> <span class="token punctuation">{</span>
+		root<span class="token operator">-&gt;</span>left <span class="token operator">=</span> <span class="token function">AVL_delete</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	root<span class="token operator">-&gt;</span>height <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token function">get_height</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">get_height</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> bf <span class="token operator">=</span> <span class="token function">get_bf</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>bf <span class="token operator">&gt;</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> <span class="token function">get_bf</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span> <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token function">LL_rotate</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>bf <span class="token operator">&gt;</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> <span class="token function">get_bf</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>left<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token function">LR_rotate</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>bf <span class="token operator">&lt;</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">&amp;&amp;</span> <span class="token function">get_bf</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token function">RR_rotate</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>bf <span class="token operator">&lt;</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">&amp;&amp;</span> <span class="token function">get_bf</span><span class="token punctuation">(</span>root<span class="token operator">-&gt;</span>right<span class="token punctuation">)</span><span class="token operator">&gt;</span><span class="token number">0</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token function">RL_rotate</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> root<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h3 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h3><h3 id="2-3-树"><a href="#2-3-树" class="headerlink" title="2-3 树"></a>2-3 树</h3><h3 id="B-树"><a href="#B-树" class="headerlink" title="B-树"></a>B-树</h3><h3 id="Trie-字典树"><a href="#Trie-字典树" class="headerlink" title="Trie 字典树"></a>Trie 字典树</h3>
                 
             </div>
             <hr/>
@@ -614,48 +845,50 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/6151f2.html">
+                <a href="/posts/d07fe0f9.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://z3.ax1x.com/2021/10/01/478qeO.jpg" class="responsive-img" alt="解析二叉搜索树">
+                        <img src="https://z3.ax1x.com/2021/10/01/478qeO.jpg" class="responsive-img" alt="leetcode题解：146.LRU缓存机制的实现">
                         
-                        <span class="card-title">解析二叉搜索树</span>
+                        <span class="card-title">leetcode题解：146.LRU缓存机制的实现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            回文串题解
+                            LRU机制
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-03
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-04
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="post-category">
-                                    数据结构
+                            <a href="/categories/LeetCode%E9%A2%98%E8%A7%A3/" class="post-category">
+                                    LeetCode题解
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                        <span class="chip bg-color">数据结构</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
+                    <a href="/tags/LeetCode%E9%A2%98%E8%A7%A3/">
+                        <span class="chip bg-color">LeetCode题解</span>
                     </a>
                     
                 </div>
@@ -840,6 +1073,13 @@
 </main>
 
 
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
 
 
     <footer class="page-footer bg-color">
@@ -911,7 +1151,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16.1k</span>&nbsp;字
+                class="white-color">18.4k</span>&nbsp;字
             
             
             
