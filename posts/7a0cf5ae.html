@@ -527,14 +527,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-01
+                    2021-10-08
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    227
+                    434
                 </div>
                 
 
@@ -567,12 +567,24 @@
 </ul>
 <h3 id="图形学"><a href="#图形学" class="headerlink" title="图形学"></a>图形学</h3><p><strong>1.渲染管线</strong><br>渲染管线指的是将一堆具有几何信息的数据点最终转换到二维屏幕空间的像素。</p>
 <ul>
-<li>顶点处理：对顶点数据进行 MVP变换。（模型变换、视角变换、投影变换）</li>
+<li>顶点处理：对顶点数据进行 MVP变换。（模型变换、视角变换、投影变换）<ul>
+<li>MVP变换;<ul>
+<li>模型变换：<br>在世界坐标系中进行。 进行缩放、旋转、平移操作</li>
+<li>视角变换：将世界坐标系中的点映射到相机坐标系中。</li>
+<li>投影变换：得到齐次坐标，经过透视除法后得到NDC坐标。将相机坐标系中的点投影到标准二维坐标系中 </li>
+</ul>
+</li>
+<li>视口变换：：将标准二维坐标系调整到显示屏幕上（缩放+平移）</li>
+</ul>
+</li>
 <li>三角形处理：将顶点按照原本的几何信息组合成三角形面。</li>
 <li>光栅化：确认三角形中的每个像素点。</li>
 <li>片元处理：对像素点进行着色。</li>
 <li>将像素点信息转换为图像</li>
 </ul>
+<p><strong>2.phong与blinn-phong反射模型</strong></p>
+<p>计算镜面反射<br>phong通过观察方向与镜面反射方向计算夹角。</p>
+<p>blinn-phong是对phong模型计算上的优化。通过半程向量与法线向量的夹角代替观察方向与镜面反射方向的夹角。<br>半程向量：光源方向与视线方向的角平分向量</p>
 
                 
             </div>
@@ -935,7 +947,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">18.4k</span>&nbsp;字
+                class="white-color">19.1k</span>&nbsp;字
             
             
             

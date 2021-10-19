@@ -527,14 +527,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-09-28
+                    2021-10-08
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.7k
+                    4.8k
                 </div>
                 
 
@@ -559,7 +559,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="C-面经"><a href="#C-面经" class="headerlink" title="C++ 面经"></a>C++ 面经</h1><h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><h4 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h4><h4 id="引用、指针"><a href="#引用、指针" class="headerlink" title="引用、指针"></a>引用、指针</h4><p>指针：存储地址<br>引用：对象的别名。<br><strong>指针与引用的区别</strong>：</p>
+                <h1 id="C-面经"><a href="#C-面经" class="headerlink" title="C++ 面经"></a>C++ 面经</h1><h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><h4 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h4><h4 id="引用、指针"><a href="#引用、指针" class="headerlink" title="引用、指针"></a>引用、指针</h4><p>指针：存储地址<br>引用：对象的别名。</p>
+<ul>
+<li>空指针</li>
+<li>野指针：访问一个已经销毁或者访问受限的区域。</li>
+<li>空悬指针：指针已经初始化，但是原本指向的对象已经被销毁，而指针没有被置空。  </li>
+</ul>
+<p><strong>指针与引用的区别</strong>：</p>
 <ul>
 <li>指针是一个存储指向对象的地址的对象。引用是对象的别名。</li>
 <li>引用必须被初始化为一个已经存在的对象的别名。而指针可以为空。</li>
@@ -611,6 +617,7 @@
 </ul>
 <h5 id="map、set-multimap、multimap-unordered-map"><a href="#map、set-multimap、multimap-unordered-map" class="headerlink" title="map、set multimap、multimap unordered_map"></a>map、set multimap、multimap unordered_map</h5><ul>
 <li>底层实现： map、set：红黑树  unordered_map： 哈希表</li>
+<li>效率对比：查找： unordered_map更快 插入：map更快</li>
 </ul>
 <h4 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h4><p>连接容器与算法<br>有的容器的迭代器只是对普通指针的简单封装。如vector。<br>有的容器的迭代器则需要复杂的实现。如deque。<br>迭代器种类：</p>
 <ul>
@@ -653,7 +660,7 @@
 <li>代码区：存储代码</li>
 <li>数据区(常量区)：存储文字常量 常量字符串、全局常量</li>
 <li>全局区（静态区）：存储全局变量、静态数据</li>
-<li>栈区: 局部变量、局部常量</li>
+<li>栈区: 局部变量、局部常量（windows默认栈大小2MB或者1MB）</li>
 <li>堆区:用户申请内存</li>
 </ul>
 <h4 id="new、delete"><a href="#new、delete" class="headerlink" title="new、delete:"></a>new、delete:</h4><p>new 和delete都是操作符。<br>auto p=new T(args):先分配内存空间（operator new），在根据参数调用对象的构造函数。<br>delete p:先调用对象的析构函数，再释放内存空间（operator delete）。</p>
@@ -1109,7 +1116,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">18.4k</span>&nbsp;字
+                class="white-color">19.1k</span>&nbsp;字
             
             
             
